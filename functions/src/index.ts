@@ -27,11 +27,13 @@ const url_server_security = `${ HTTP_PROTOCOL }://${ SECURITY_SERVER }`;
 app.post('*', async ( req: any, res: any ) => {
 
     if ( !req.body.user_id ) 
-        res.send(404, "Not Found");
+        res.status( 404 ).send( "Not Found" );
 
     let user_id = req.body.user_id;
     let system_id = req.body.system_id;
     let profile = req.body.profile;
+
+    console.log(user_id, system_id, profile);
 
     /* ************************
      * CONSULTAR DIRECCION
@@ -40,7 +42,7 @@ app.post('*', async ( req: any, res: any ) => {
    await axios.get(`${ url_user }.json`).then( async ( request: any ) => {
 
         if ( !request.data )
-            res.send( 404, "Not Found" );
+            res.status( 404 ).send( "Not Found" );
 
         if( request.data.business ) {
 
@@ -52,7 +54,8 @@ app.post('*', async ( req: any, res: any ) => {
                     brands.push({
                         business_id: business.id,
                         brand_id: brand.id,
-                        name: brand.name
+                        name: brand.name,
+                        image: brand.image
                     });
                 });
             });
@@ -72,7 +75,7 @@ app.post('*', async ( req: any, res: any ) => {
             });
 
         } else {
-            res.send( 403, "you do not have access configured, contact the system administrator." );
+            res.status( 403 ).send( "you do not have access configured, contact the system administrator." );
         }
 
    });
