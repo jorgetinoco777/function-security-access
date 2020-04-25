@@ -7,9 +7,9 @@ const app = express();
 // CORS
 const cors = require('cors');
 
-app.use(express.json()) // for parsing application/json
-app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
-app.use(cors()) // Add cors
+app.use(express.json()); // for parsing application/json
+app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(cors()); // Add cors
 
 //Axios
 const axios = require('axios');
@@ -29,9 +29,9 @@ app.post('*', async ( req: any, res: any ) => {
     if ( !req.body.user_id ) 
         res.status( 404 ).send( "Not Found" );
 
-    let user_id = req.body.user_id;
-    let system_id = req.body.system_id;
-    let profile = req.body.profile;
+    const user_id = req.body.user_id;
+    const system_id = req.body.system_id;
+    const profile = req.body.profile;
 
     console.log(user_id, system_id, profile);
 
@@ -46,8 +46,8 @@ app.post('*', async ( req: any, res: any ) => {
 
         if( request.data.business ) {
 
-            let user = request.data;
-            let brands: any[] = [];
+            const user = request.data;
+            const brands: any[] = [];
 
             Utils.convert_to_array( user.business ).forEach( business => {
                 Utils.convert_to_array( business.brands ).forEach( brand => {
@@ -61,7 +61,7 @@ app.post('*', async ( req: any, res: any ) => {
             });
 
             let navigations: any[] = [];
-            let url_navigation = `${ url_server_security }/systems/${ system_id }/profiles/${ profile }`;
+            const url_navigation = `${ url_server_security }/systems/${ system_id }/profiles/${ profile }`;
             await axios.get(`${ url_navigation }.json`).then( async ( nav: any ) => {
                 
                 //console.log("Nav", nav.data);
