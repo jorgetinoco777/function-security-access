@@ -31,9 +31,6 @@ app.post('*', async ( req: any, res: any ) => {
 
     const user_id = req.body.user_id;
     const system_id = req.body.system_id;
-    const profile = req.body.profile;
-
-    console.log(user_id, system_id, profile);
 
     /* ************************
      * CONSULTAR DIRECCION
@@ -61,7 +58,7 @@ app.post('*', async ( req: any, res: any ) => {
             });
 
             let navigations: any[] = [];
-            const url_navigation = `${ url_server_security }/systems/${ system_id }/profiles/${ profile }`;
+            const url_navigation = `${ url_server_security }/systems/${ system_id }/profiles/${ user.profile }`;
             await axios.get(`${ url_navigation }.json`).then( async ( nav: any ) => {
                 
                 //console.log("Nav", nav.data);
