@@ -69,7 +69,12 @@ app.post('*', async ( req: any, res: any ) => {
                 
             });
             
-            res.send({ 
+            res.send({
+                photo: user.photo ? user.photo : null,
+                name: user.name,
+                profile: user.profile,
+                remember: user.remember,
+                status: user.status,
                 brands: brands,
                 navigations: navigations
             });
