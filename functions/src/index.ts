@@ -18,11 +18,11 @@ const axios = require('axios');
 import { Utils } from './util/utils';
 
 // Const
-import { HTTP_PROTOCOL, CATALOGS_SERVER, SECURITY_SERVER } from './data/global.data';
+import { firebase } from './data/global.data';
 
 // Url Server Catalogos -> Seguridades
-const url_server_user = `${ HTTP_PROTOCOL }://${ CATALOGS_SERVER }`;
-const url_server_security = `${ HTTP_PROTOCOL }://${ SECURITY_SERVER }`;
+const url_server_user = `${ firebase.databaseURL }`;
+const url_server_security = `${ firebase.databaseURL }`;
 
 app.post('*', async ( req: any, res: any ) => {
 
@@ -35,7 +35,7 @@ app.post('*', async ( req: any, res: any ) => {
     /* ************************
      * CONSULTAR DIRECCION
     ************************ */
-   const url_user = `${ url_server_user }/users/${ user_id }`;
+   const url_user = `${ url_server_user }/admin/${ user_id }`;
    await axios.get(`${ url_user }.json`).then( async ( request: any ) => {
 
         if ( !request.data )
@@ -47,7 +47,9 @@ app.post('*', async ( req: any, res: any ) => {
             const brands: any[] = [];
 
             Utils.convert_to_array( user.business ).forEach( business => {
+
                 Utils.convert_to_array( business.brands ).forEach( brand => {
+
                     brands.push({
                         business_id: business.id,
                         brand_id: brand.id,
